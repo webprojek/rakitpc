@@ -1,0 +1,82 @@
+html, body {
+    margin: 0;         /* hilangkan jarak default browser */
+    padding: 0;        /* hilangkan padding default */
+    height: 100%;      /* pastikan tinggi 100% dari html */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, #A7F9ED 0%, #98D8FC 100%);
+    color: black;
+    height: 100vh;     /* 100% dari viewport height */
+}
+
+
+
+h1 {
+text-align: center;
+}
+
+.build-item {
+display: flex;
+gap: 15px;
+background: white;
+padding: 12px;
+border-radius: 10px;
+margin-bottom: 12px;
+}
+
+.build-item img {
+width: 80px;
+height: 80px;
+object-fit: contain;
+}
+
+.info h3 {
+margin: 0;
+}
+
+.info p {
+font-size: 14px;
+opacity: 0.8;
+}
+
+.total-box {
+background: white ;
+padding: 15px;
+border-radius: 10px;
+text-align: center;
+margin-top: 20px;
+}
+
+.total-box p {
+font-size: 24px;
+font-weight: bold;
+color: #38bdf8;
+}
+
+.action {
+display: flex;
+justify-content: space-between;
+margin-top: 20px;
+}
+
+button {
+padding: 10px 18px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+}
+
+.info-box {
+  background: #ffffff;
+  padding: 15px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.8;
+}

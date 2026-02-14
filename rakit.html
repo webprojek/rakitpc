@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Rakit PC</title>
+  <link rel="stylesheet" href="style-rakit.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="rakit-page">
+
+  <!-- TOP BAR BIRU -->
+  <div class="top-bar-rakit">
+    <p>Pilih perangkat untuk bangun PC impianmu</p>
+  </div>
+
+<!-- WARNING INFO -->
+<div class="warning-box">
+  <p class="warning-title"> Halo para user!</p>
+<p class="warning-text">
+  <b>Harga komponen bisa berbeda</b> dari marketplace sebenarnya.<br>
+  Perbedaan dipengaruhi promo, stok, lokasi penjual, serta kelengkapan dan garansi.<br>
+  Mohon <b>berbijak saat memilih</b> agar terhindar dari penipuan.
+</p>
+</div>
+
+
+
+<div class="container-rakit">
+  <div class="item" id="socketItem">
+    <span class="label">SOCKET :</span>
+    <div class="value"></div>
+  </div>
+
+  <div class="item" id="processorItem">
+    <span class="label">PROCESSOR :</span>
+    <div class="value"></div>
+  </div>
+
+  <div class="item" id="motherboardItem">
+    <span class="label">MOTHERBOARD :</span>
+    <div class="value"></div>
+  </div>
+  
+  <div class="item" id="cpuCoolerItem">
+    <span class="label">CPU COOLER :</span>
+    <div class="value"></div>
+  </div>
+
+  <div class="item" id="ramItem">
+    <span class="label">RAM :</span>
+    <div class="value"></div>
+  </div>
+
+  <div class="item" id="gpuItem">
+    <span class="label">GPU :</span>
+    <div class="value"></div>
+  </div>
+  
+  
+  <div class="item" id="ssdnvmeItem">
+    <span class="label">SSD NVME :</span>
+    <div class="value"></div>
+  </div>
+  
+    <div class="item" id="ssdsataItem">
+    <span class="label">SSD SATA :</span>
+    <div class="value"></div>
+  </div>
+  
+  <div class="item" id="hddItem">
+    <span class="label">HDD:</span>
+    <div class="value"></div>
+  </div>
+
+  <div class="item" id="psuItem">
+    <span class="label">PSU :</span>
+    <div class="value"></div>
+  </div>
+
+  <div class="item" id="casingItem">
+    <span class="label">CASING :</span>
+    <div class="value"></div>
+  </div>
+</div>
+
+  <div class="total-build">
+    <button id="btnTotal">Lihat Total Build</button>
+  </div>
+</div>
+
+
+
+
+  <!-- MODAL PILIH PERANGKAT -->
+  <div id="socketModal" class="modal">
+    <div class="modal-box">
+      <div id="socketOptions"></div> <!-- JS akan isi tombol disini -->
+      <button id="btnTutup">Tutup</button>
+    </div>
+  </div>
+  
+<div id="ramModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeRam">&times;</span>
+    <div id="ramOptions"></div>
+  </div>
+</div>
+
+
+
+
+  <!-- DATA -->
+  <script src="data-socket.js"></script>
+  <script src="cpu-amd.js"></script>
+  <script src="cpu-intel.js"></script>
+  <script src="data-motherboard_amd.js"></script>
+  <script src="data-motherboard_intel.js"></script>
+  <script src="data-cpucooler.js"></script>
+  <script src="data-ram.js"></script>
+  <script src="data-ssdnvme.js"></script>
+  <script src="data-ssdsata.js"></script>
+  <script src="data-gpu.js"></script>
+  <script src="data-hdd.js"></script>
+  <script src="data-casing.js"></script>
+  <script src="data-psu.js"></script>
+
+  <!-- LOGIC -->
+  <script src="rakit.js"></script>
+  <script src="totalBtn.js"></script>
+  <script src="sound.js"></script>
+
+</body>
+</html>

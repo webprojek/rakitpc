@@ -1,0 +1,487 @@
+/* =====================
+   HALAMAN 2 - RAKIT PC
+===================== */
+
+/* GLOBAL RESET & BODY */
+body.rakit-page {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #A7F9ED 0%, #98D8FC 100%);
+  overflow-x: hidden;
+}
+
+/* =====================
+   KOTAK BIRU ATAS
+===================== */
+.top-bar-rakit {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(to right, #3E9FEC, #1853D3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  position: relative;
+
+  transform: translateY(-100%);
+  animation: slideDown 0.8s forwards;
+  z-index: 999;
+}
+
+@keyframes slideDown {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* teks di kotak biru */
+.top-bar-rakit p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  white-space: normal;
+  text-align: left;
+
+  position: relative;
+  left: -100%;
+  animation: slideInText 1s forwards;
+}
+
+@keyframes slideInText {
+  to { left: 0; }
+}
+
+/* WARNING BOX */
+.warning-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  animation: slideDown 0.7s ease-out;
+}
+
+.warning-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #ff9800;
+}
+
+.warning-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* ANIMASI MUNCUL DARI ATAS */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =====================
+   CONTAINER ITEM RAKIT
+===================== */
+.container-rakit {
+  margin: 16px auto;
+  width: 90%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* animasi slide up dari bawah */
+  transform: translateY(50px);
+  opacity: 0;
+  animation: slideUp 0.6s forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ITEM */
+.item {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  padding: 12px 16px;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* hover efek */
+.item:hover {
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+
+/* =====================
+   MODAL RAKIT
+===================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+/* kotak modal putih */
+.modal-box {
+  width: 90%;
+  max-width: 420px;
+  max-height: 80vh;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* saat modal tampil */
+.modal.show .modal-box {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* header h3 di modal */
+#socketOptions h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* tombol pilihan di modal */
+.option-btn {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* hover tombol */
+.option-btn:hover {
+  background: #e0e0e0;
+}
+
+/* spesifikasi di tombol */
+.cpu-spec, .spec {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+  white-space: pre-line;
+  margin-top: 4px;
+}
+
+/* tombol tutup modal */
+#btnTutup {
+  margin-top: 12px;
+  padding: 10px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  background: #38bdf8;
+  color: #020617;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+#btnTutup:hover {
+  background: #0ea5e9;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-box {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+#socketOptions button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+}
+
+.option-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.option-img {
+  width: 70px;
+  height: auto;
+  object-fit: contain;
+}
+
+.option-text {
+  text-align: left;
+}
+
+.selected-img {
+  width: 60px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+
+.option-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.option-img {
+  width: 70px;
+  height: auto;
+}
+
+.selected-img {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+.spec-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.spec-img {
+  width: 70px;
+  height: auto;
+}
+
+.spec-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.spec-info p {
+  font-size: 13px;
+  color: #666;
+}
+
+.price-box {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.price-btn {
+  background: #f2f2f2;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #000;
+}
+
+
+
+.price {
+  color: black;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.option-card {
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-card:hover {
+  border-color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.option-card .option-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.option-card .option-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.option-card .price {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ccc;
+}
+
+.price-label {
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+.price-select {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 6px;
+}
+
+/* === GPU LIST BOX === */
+.option-btn.gpu {
+  display: block;
+  width: 100%;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+/* hover biar enak */
+.option-btn.gpu:hover {
+  border-color: #4f46e5;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+/* row isi */
+.option-btn.gpu .option-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* gambar GPU */
+.option-btn.gpu .option-img {
+  width: 70px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* teks */
+.option-btn.gpu .option-text small {
+  color: #555;
+  line-height: 1.4;
+}
+
+.gpu-spec {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.build-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 80px; /* ruang aman buat tombol */
+}
+
+.total-build {
+  position: sticky;
+  bottom: 16px;
+  background: #e0f2fe;
+  padding-top: 10px;
+}
+
+#btnTotal {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.price-select {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.buy-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #1e88e5;
+  text-decoration: underline;
+}
+
+.detail-link {
+  font-size: 12px;
+  color: #1e90ff;
+  text-decoration: underline;
+}
+

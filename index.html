@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Rakit PC Impian</title>
+  <link rel="stylesheet" href="style.css">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+<body class="landing">
+  
+<!-- Top bar baru -->
+<div class="top-bar-new">
+  <div class="menu-dot-new" onclick="toggleWindowNew()">⋮</div>
+  <p>Web Rakit PC Buatan Siswa SMK</p>
+</div>
+
+
+<div class="sponsor-slot active">
+  <a href="https://www.tiktok.com/@alif_setiawan2?_r=1&_t=ZS-93GuhcNj9eu" target="_blank">
+    <img src="iklan.png" alt="Sponsor">
+  </a>
+</div>
+
+
+<div class="pc-random-area">
+  <img class="pc-random-item item-1" src="ssd.png" alt="CPU">
+  <img class="pc-random-item item-2" src="ram.png" alt="RAM">
+  <img class="pc-random-item item-3" src="motherboard.png" alt="GPU">
+  <img class="pc-random-item item-4" src="amdbox.png" alt="SSD">
+    <img class="pc-random-item item-5" src="intelbox.png" alt="INTEL">
+      <img class="pc-random-item item-6" src="gpu.png" alt="AMD">
+</div>
+
+
+  <!-- MENU TOMBOL 3 -->
+<div class="menu">
+  <div class="menu-btn" id="btnRakit">COBA RAKIT</div>
+<div class="menu-btn" onclick="openMenuPopup('belajar')">
+  PELAJARI TENTANG KOMPUTER
+</div>
+
+<div class="menu-btn" onclick="openMenuPopup('simulasi')">
+  SIMULASI 3D
+</div>
+</div>
+
+<!-- MENU POPUP BARU -->
+<div id="menuPopupOverlay" class="menu-popup-overlay">
+  <div class="menu-popup-box" onclick="event.stopPropagation()">
+    <div id="menuPopupContent" class="menu-popup-content"></div>
+  </div>
+</div>
+
+
+
+<!-- Latar belakang gelap popup -->
+<div class="info-overlay" id="infoOverlay"></div>
+
+
+<div class="modal" id="platformModal">
+  <div class="platform-box">
+    <span class="close-modal" id="closePlatform">✕</span>
+
+    <h3>Pilih Platform</h3>
+
+    <div class="platform-buttons">
+      <img src="intel.png" id="intel" class="logo">
+      <img src="amdryzen.png" id="amd" class="logo">
+    </div>
+
+    <button id="lanjut" class="btn-mulai">Lanjut</button>
+  </div>
+</div>
+
+<!-- Popup info di luar top-bar -->
+<div class="popup-window-new" id="popupWindowNew">
+<div class="popup-box" onclick="event.stopPropagation(); openPopup('info')">
+  INFO WEB
+</div>
+
+<div class="popup-box" onclick="event.stopPropagation(); openPopup('bug')">
+  MASUKAN SARAN / BUG
+</div>
+
+<div class="popup-box" onclick="event.stopPropagation(); openPopup('infopengembangan')">
+  INFO PENGEMBANGAN WEB
+</div>
+
+<div class="popup-box" onclick="event.stopPropagation(); openPopup('about')">
+  ABOUT
+</div>
+<!-- popup overlay -->
+<div id="popupOverlay" class="popup-overlay" onclick="closePopup()">
+
+  <!-- kotak popup -->
+  <div class="popup-content" onclick="event.stopPropagation()">
+
+    <div id="popupText"></div>
+
+  </div>
+</div>
+
+
+  <script src="awal.js"></script>
+  <script src="sound.js"></script>
+</body>
+</html>

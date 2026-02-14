@@ -1,0 +1,412 @@
+/* =====================
+   GLOBAL RESET
+===================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+}
+
+body.landing {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #A7F9ED 0%, #98D8FC 100%);
+  background-attachment: fixed;
+  overflow-y: auto;
+}
+
+/* =====================
+   TOP BAR
+===================== */
+.top-bar-new {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(to right, #3E9FEC, #1853D3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  position: relative;
+  z-index: 999;
+
+  transform: translateY(-100%);
+  animation: slideDownTopBar 0.8s forwards;
+}
+
+@keyframes slideDownTopBar {
+  to { transform: translateY(0); }
+}
+
+.menu-dot-new {
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1000;
+}
+
+.top-bar-new p {
+  color: white;
+  font-size: 1rem;
+  white-space: normal;
+  flex: 1;
+  text-align: left;
+
+  position: relative;
+  left: -100%;
+  animation: slideInTextTopBar 1s forwards;
+}
+
+@keyframes slideInTextTopBar {
+  to { left: 0; }
+}
+
+/*iklan */
+
+.sponsor-slot {
+  display: inline-block;   /* ⬅️ KUNCI */
+  padding: 12px;
+  background: #f0f0f0;
+  border: 2px dashed #bbb;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.sponsor-slot p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.sponsor-slot span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.sponsor-slot.active {
+  background: white ;
+  border: none;
+}
+.sponsor-slot img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== PORTRAIT (default, ga usah disentuh lagi) ===== */
+.sponsor-slot {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.sponsor-slot img {
+  max-width: 260px;   /* PAS portrait */
+  height: auto;
+  display: block;
+}
+
+/* ===== LANDSCAPE ===== */
+@media (orientation: landscape) {
+  .sponsor-slot img {
+    max-width: 420px; /* khusus landscape */
+  }
+}
+
+/* POPUP TITIK TIGA */
+.popup-window-new {
+  position: absolute;
+  top: 60px; 
+  left: 16px; 
+  width: 260px;
+  padding: 1rem;
+  background: rgba(255,255,255,0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: block; /* tetap ada, tapi kita sembunyikan pakai transform */
+  transform: translateX(-120%); /* mulai dari kiri luar */
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.popup-window-new.show {
+  transform: translateX(0); /* posisi normal */
+  opacity: 1;
+}
+
+.popup-window-new.hide {
+  transform: translateX(-120%); /* slide keluar kiri */
+  opacity: 0;
+}
+
+.popup-window-new p {
+  font-size: 0.9rem;
+  color: black;
+}
+
+.popup-box {
+  background: #f0f0f0;       /* warna kotak */
+  padding: 0.8rem 1rem;      /* jarak dalam kotak */
+  margin: 0.5rem 0;          /* jarak antar kotak */
+  border-radius: 8px;         /* bentuk kotak rounded */
+  cursor: pointer;           
+  text-align: center;         
+  font-weight: 500;          
+  transition: all 0.2s ease;  /* efek smooth hover */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* bayangan kotak */
+}
+
+.popup-box:hover {
+  background: #dcdcdc;        
+  transform: translateY(-2px); /* naik sedikit saat hover */
+}
+
+/* overlay hitam transparan */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+
+
+  display: none; /* awalnya mati */
+  align-items: center; /* tengah vertikal */
+  justify-content: center; /* tengah horizontal */
+
+  z-index: 9999;
+}
+
+/* kotak popup */
+.popup-content {
+  background: white;
+  color: white;
+
+  width: 90%;
+  max-width: 420px; /* ATUR LEBAR */
+  min-height: 200px; /* ATUR TINGGI */
+
+  padding: 20px;
+  border-radius: 14px;
+
+  position: relative;
+  text-align: justify; /* rata kanan kiri */
+  line-height: 1.6;    /* biar nggak mepet */
+  margin-bottom: 12px; /* jarak antar paragraf */
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+@keyframes popupFade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popup-title {
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.popup-content p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* =====================
+   AREA ANIMASI PC
+===================== */
+.pc-random-area {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  margin-top: 4vh;
+  overflow: visible; /* ⬅️ PENTING */
+}
+.pc-random-item {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(10vh);
+  animation: riseUp 0.8s forwards;
+}
+
+@keyframes riseUp {
+  from {
+    transform: translateY(10vh) rotate(-5deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) rotate(6deg);
+    opacity: 1;
+  }
+}
+
+/* POSISI ITEM */
+.item-1 { left: 50%; top: 50%; width: 200px; animation-delay: 0.1s; }
+.item-2 { left: 50%; top: 70%; width: 150px; animation-delay: 0.2s; }
+.item-3 { left: 11%; top: 30%; width: 300px; animation-delay: 0.3s; }
+.item-4 { left: 5%;  top: 10%; width: 250px; animation-delay: 0.4s; }
+.item-5 { left: 70%; top: 20%; width: 120px; animation-delay: 0.5s; }
+.item-6 { left: 5%;  top: 80%; width: 190px; animation-delay: 0.6s; }
+
+/* =====================
+   MODAL PLATFORM
+===================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.platform-box {
+  background: white;
+  width: 85%;
+  max-width: 360px;
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.platform-buttons {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.logo {
+  width: 90px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logo:hover { transform: scale(1.1); }
+.logo.active { transform: scale(1.15); }
+
+#closePlatform { display: none; }
+
+.btn-mulai {
+  margin-top: 8px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #38bdf8;
+}
+
+/* =====================
+   POPUP INFO
+===================== */
+.info-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  z-index: 9999;
+    text-align: justify; /* rata kanan kiri */
+  line-height: 1.6;    /* biar nggak mepet */
+  margin-bottom: 12px; /* jarak antar paragraf */
+}
+
+.info-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 360px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  display: none;
+  z-index: 10000;
+}
+
+/* =====================
+   MENU 3 TOMBOL
+===================== */
+.menu {
+  position: absolute;
+  left: 50%;
+  top: 65%; /* sedikit ke bawah */
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  z-index: 500;
+}
+
+.menu-btn {
+  width: 350px; /* atau sesuai selera */
+  height: 50px;
+  background: white;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+/* =====================
+   MENU POPUP BARU (AMAN)
+===================== */
+.menu-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.menu-popup-box {
+  background: white;
+  width: 90%;
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.menu-popup-content p {
+  text-align: justify; /* rata kanan kiri */
+  line-height: 1.6;    /* biar nggak mepet */
+  margin-bottom: 12px; /* jarak antar paragraf */
+}
+
+.menu-popup-content h3 {
+  text-align: center; /* judul tetep di tengah */
+  margin-bottom: 14px;
+}
