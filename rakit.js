@@ -543,91 +543,94 @@ gpuItem.onclick = () => {
     const card = document.createElement("div");
     card.className = "option-card";
 
-    const selectedPrice = gpu.prices[0];
+    let qty = 1; // default 1 pcs
+    let selectedPrice = gpu.prices[0]; // default harga pertama
 
     card.innerHTML = `
       <div class="option-row">
         <img src="gpu2d.jpg" class="option-img">
         <div class="option-text">
           <strong>${gpu.name}</strong><br>
-            <small class="gpu-spec">
-              VRAM: ${gpu.vram}<br>
-              Etimasi Daya: ${gpu.power}<br>
-              fan: ${gpu.fan}
-            </small>
+          <small class="gpu-spec">
+            VRAM: ${gpu.vram}<br>
+            Etimasi Daya: ${gpu.power}W<br>
+            fan: ${gpu.fan}
+          </small>
         </div>
       </div>
 
       <div class="price">
         <div class="price-label">Pilih harga :</div>
-
         <select class="price-select">
           ${gpu.prices.map((p, i) => `
-            <option value="${i}">
-              ${p.store} - Rp ${p.price.toLocaleString("id-ID")}
-            </option>
+            <option value="${i}">${p.store} - Rp ${p.price.toLocaleString("id-ID")}</option>
           `).join("")}
         </select>
 
-        <a class="buy-link" href="${selectedPrice.link}" target="_blank">
-          Link produk
-        </a>
+        <div class="price-label">Jumlah :</div>
+        <select class="qty-select">
+          <option value="1">1 pcs</option>
+          <option value="2">2 pcs</option>
+          <option value="3">3 pcs</option>
+          <option value="4">4 pcs</option>
+        </select>
+
+        <a class="buy-link" href="${selectedPrice.link}" target="_blank">Link produk</a>
       </div>
     `;
 
-    // 🔄 UPDATE LINK SAAT GANTI TOKO
-    const select = card.querySelector(".price-select");
+    const priceSelect = card.querySelector(".price-select");
+    const qtySelect = card.querySelector(".qty-select");
     const link = card.querySelector(".buy-link");
 
-select.onchange = () => {
-  const priceIndex = Number(select.value);
-  const chosenPrice = gpu.prices[priceIndex];
-
-  link.href = chosenPrice.link;
-
-  if (gpuDipilih && gpuDipilih.id === gpu.id) {
-    gpuDipilih.price = chosenPrice.price;
-    gpuDipilih.store = chosenPrice.store;
-    gpuDipilih.link = chosenPrice.link;
-    saveBuild();
-  }
-};
-
-    // BIAR DROPDOWN & LINK BISA DIKLIK
-    select.onclick = e => e.stopPropagation();
-    link.onclick = e => e.stopPropagation();
-
-    // ✅ SAAT GPU DIPILIH
-    card.onclick = () => {
-      const priceIndex = select.value;
-      const chosenPrice = gpu.prices[priceIndex];
-
-      gpuDipilih = {
-        ...gpu,
-        price: chosenPrice.price,
-        store: chosenPrice.store,
-        link: chosenPrice.link
-      };
-
-      saveBuild();
-
-gpuItem.innerHTML = `
-  <img src="gpu2d.jpg" class="selected-img">
-  <div>
-    <strong>${gpu.name}</strong><br>
-    <small>
-      ${gpu.vram} • ${gpu.fan}<br>
-   ${chosenPrice.price.toLocaleString("id-ID")}
-    </small><br>
-    <a class="buy-link" href="${chosenPrice.link}" target="_blank">
-      Link produk
-    </a>
-  </div>
-`;
-
-      modal.classList.remove("show");
-      setTimeout(() => modal.style.display = "none", 300);
+    // 🔄 Update link & selectedPrice saat ganti toko
+    priceSelect.onchange = e => {
+      const chosenPrice = gpu.prices[Number(priceSelect.value)];
+      selectedPrice = chosenPrice;
+      link.href = chosenPrice.link;
     };
+
+    priceSelect.onclick = e => e.stopPropagation();
+    link.onclick = e => e.stopPropagation();
+    qtySelect.onclick = e => e.stopPropagation();
+
+card.onclick = () => {
+  const chosenPrice = gpu.prices[Number(priceSelect.value)];
+  const gpuQty = Number(qtySelect.value);
+
+  // ✅ Ambil tdp dari data GPU
+  const unitTDP = gpu.tdp; // pastikan ini 56 misal
+  const totalTDP = unitTDP * gpuQty;
+
+  gpuDipilih = {
+    ...gpu,
+    price: chosenPrice.price * gpuQty,
+    unitPrice: chosenPrice.price,
+    store: chosenPrice.store,
+    link: chosenPrice.link,
+    qty: gpuQty,
+    totalTDP: totalTDP
+  };
+
+  saveBuild();
+
+  gpuItem.innerHTML = `
+    <img src="gpu2d.jpg" class="selected-img">
+    <div>
+      <strong>${gpu.name}</strong><br>
+      <small>
+        ${gpu.vram} • ${gpu.fan}<br>
+        Jumlah : ${gpuQty} pcs<br>
+        Est. Daya : ${totalTDP}W
+      </small><br>
+      <b>Rp ${gpuDipilih.price.toLocaleString("id-ID")}</b><br>
+      <a class="buy-link" href="${gpuDipilih.link}" target="_blank">Link produk</a>
+    </div>
+  `;
+
+  modal.classList.remove("show");
+  setTimeout(() => modal.style.display = "none", 300);
+};
 
     optionsBox.appendChild(card);
   });
@@ -635,7 +638,6 @@ gpuItem.innerHTML = `
   modal.style.display = "flex";
   modal.classList.add("show");
 };
-
 /* ===============================
    SSD NVMe ONLY
 ================================ */
@@ -902,114 +904,95 @@ ${ssd.spec}
   showModal();
 }
 
-gpuItem.onclick = () => {
-  if (!GPU_DATA || !Array.isArray(GPU_DATA)) {
-    alert("Data GPU tidak terbaca");
-    return;
-  }
 
-  optionsBox.innerHTML = `
-    <h3>Pilih GPU</h3>
-    <p class="gpu-warning">
-      ⚠️ Perhatikan keseimbangan CPU dan GPU.
-      GPU terlalu kuat dengan CPU lemah dapat menyebabkan <b>bottleneck</b>.
-    </p>
-  `;
 
-  GPU_DATA.forEach(gpu => {
-    const card = document.createElement("div");
-    card.className = "option-card";
+hddItem.onclick = () => {
 
-    let qty = 1; // default 1 pcs
-    let selectedPrice = gpu.prices[0]; // default harga pertama
+  optionsBox.innerHTML = "<h3>Pilih HDD</h3>";
 
-    card.innerHTML = `
+  HDD_DATA.forEach(hdd => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+
+    // 🔑 STATE
+    let selectedPrice = {
+      price: hdd.price,
+      link: hdd.link,
+      store: "Default"
+    };
+    let qty = 1;
+
+    btn.innerHTML = `
       <div class="option-row">
-        <img src="gpu2d.jpg" class="option-img">
+        <img src="${hdd.image || 'hdd2d.jpg'}" class="option-img">
         <div class="option-text">
-          <strong>${gpu.name}</strong><br>
-          <small class="gpu-spec">
-            VRAM: ${gpu.vram}<br>
-            Etimasi Daya: ${gpu.power}W<br>
-            fan: ${gpu.fan}
-          </small>
+          <strong>${hdd.name}</strong><br>
+          <small>${hdd.spec}</small><br>
+          <b>Rp ${hdd.price.toLocaleString("id-ID")}</b><br>
+
+          <div class="price-label">Jumlah :</div>
+          <select class="qty-select">
+            <option value="1">1 pcs</option>
+            <option value="2">2 pcs</option>
+            <option value="4">4 pcs</option>
+          </select>
+
+          <a class="buy-link" href="${selectedPrice.link}" target="_blank">
+            Link produk
+          </a>
         </div>
-      </div>
-
-      <div class="price">
-        <div class="price-label">Pilih harga :</div>
-        <select class="price-select">
-          ${gpu.prices.map((p, i) => `
-            <option value="${i}">${p.store} - Rp ${p.price.toLocaleString("id-ID")}</option>
-          `).join("")}
-        </select>
-
-        <div class="price-label">Jumlah :</div>
-        <select class="qty-select">
-          <option value="1">1 pcs</option>
-          <option value="2">2 pcs</option>
-          <option value="3">3 pcs</option>
-          <option value="4">4 pcs</option>
-        </select>
-
-        <a class="buy-link" href="${selectedPrice.link}" target="_blank">Link produk</a>
       </div>
     `;
 
-    const priceSelect = card.querySelector(".price-select");
-    const qtySelect = card.querySelector(".qty-select");
-    const link = card.querySelector(".buy-link");
+    const qtySelect = btn.querySelector(".qty-select");
+    const buyLink = btn.querySelector(".buy-link");
 
-    // 🔄 Update link & selectedPrice saat ganti toko
-    priceSelect.onchange = e => {
-      const chosenPrice = gpu.prices[Number(priceSelect.value)];
-      selectedPrice = chosenPrice;
-      link.href = chosenPrice.link;
+    // 🔁 UPDATE JUMLAH
+    qtySelect.onchange = () => {
+      qty = Number(qtySelect.value);
     };
 
-    priceSelect.onclick = e => e.stopPropagation();
-    link.onclick = e => e.stopPropagation();
-    qtySelect.onclick = e => e.stopPropagation();
+    // ✅ PILIH HDD
+    btn.onclick = (e) => {
+      if (e.target.tagName === "SELECT" || e.target.tagName === "A") return;
 
-card.onclick = () => {
-  const chosenPrice = gpu.prices[Number(priceSelect.value)];
-  const gpuQty = Number(qtySelect.value);
+      hddDipilih = {
+        name: hdd.name,
+        spec: hdd.spec,
+        image: hdd.image || 'hdd2d.jpg',
 
-  // ✅ Ambil tdp dari data GPU
-  const unitTDP = gpu.tdp; // pastikan ini 56 misal
-  const totalTDP = unitTDP * gpuQty;
+        qty: qty,
+        unitPrice: selectedPrice.price,
+        price: selectedPrice.price * qty,
 
-  gpuDipilih = {
-    ...gpu,
-    price: chosenPrice.price * gpuQty,
-    unitPrice: chosenPrice.price,
-    store: chosenPrice.store,
-    link: chosenPrice.link,
-    qty: gpuQty,
-    totalTDP: totalTDP
-  };
+        store: selectedPrice.store,
+        link: selectedPrice.link
+      };
 
-  saveBuild();
+      saveBuild();
 
-  gpuItem.innerHTML = `
-    <img src="gpu2d.jpg" class="selected-img">
-    <div>
-      <strong>${gpu.name}</strong><br>
-      <small>
-        ${gpu.vram} • ${gpu.fan}<br>
-        Jumlah : ${gpuQty} pcs<br>
-        Est. Daya : ${totalTDP}W
-      </small><br>
-      <b>Rp ${gpuDipilih.price.toLocaleString("id-ID")}</b><br>
-      <a class="buy-link" href="${gpuDipilih.link}" target="_blank">Link produk</a>
-    </div>
-  `;
+      hddItem.innerHTML = `
+        <span class="label">HDD :</span>
+        <div class="value">
+          <img src="${hddDipilih.image}" class="selected-img">
+          <div>
+            <strong>${hdd.name}</strong><br>
+            <small>${hdd.spec}</small><br>
+            <small>${selectedPrice.store}</small><br>
+            <small>Jumlah : ${qty} pcs</small><br>
+            <b>Rp ${(selectedPrice.price * qty).toLocaleString("id-ID")}</b><br>
+            <a class="buy-link" href="${selectedPrice.link}" target="_blank">
+              Link produk
+            </a>
+          </div>
+        </div>
+      `;
 
-  modal.classList.remove("show");
-  setTimeout(() => modal.style.display = "none", 300);
-};
+      modal.style.display = "none";
+      modal.classList.remove("show");
+    };
 
-    optionsBox.appendChild(card);
+    optionsBox.appendChild(btn);
   });
 
   modal.style.display = "flex";
